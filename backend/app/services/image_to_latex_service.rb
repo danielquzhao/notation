@@ -14,6 +14,7 @@ class ImageToLatexService
 
     # Call Gemini Vision API
     response = @client.generate_content(
+      model: "gemini-3-flash-preview",
       contents: {
         parts: [
           { text: vision_prompt },
