@@ -37,6 +37,7 @@ class ImageToLatexService
     uri = URI(GEMINI_API_URL)
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
+    http.read_timeout = 300 # 5 minutes
 
     request = Net::HTTP::Post.new(uri)
     request["x-goog-api-key"] = @api_key

@@ -43,6 +43,7 @@ class PdfToLatexService
     uri = URI("#{FILES_API_URL}?key=#{@api_key}")
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
+    http.read_timeout = 300 # 5 minutes
 
     request = Net::HTTP::Post.new(uri)
     request["X-Goog-Upload-Protocol"] = "resumable"
@@ -51,7 +52,7 @@ class PdfToLatexService
     request["X-Goog-Upload-Header-Content-Type"] = CONTENT_TYPE
     request["Content-Type"] = "application/json"
 
-    display_name = File.basename(@pdf_file.filename || "document")
+    display_name = File.basename(@pdf_file.original_filename || "document")
     request.body = JSON.generate({
       file: {
         display_name: display_name
@@ -71,6 +72,7 @@ class PdfToLatexService
     uri = URI(upload_url)
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
+    http.read_timeout = 300 # 5 minutes
 
     request = Net::HTTP::Post.new(uri)
     request["Content-Length"] = file_size.to_s
@@ -101,6 +103,7 @@ class PdfToLatexService
     uri = URI(GEMINI_API_URL)
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
+    http.read_timeout = 300 # 5 minutes
 
     request = Net::HTTP::Post.new(uri)
     request["x-goog-api-key"] = @api_key
