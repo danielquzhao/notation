@@ -91,5 +91,30 @@ The project directory `/Users/quynhan/Desktop/notation` currently only contains 
 - Local component state for tab switching and loading states
 - Error handling for failed conversions
 
-### 4. Integration
-Connect the frontend upload form to the backend `POST /convert` endpoint.
+### 4. LaTeX Compilation (Backend)
+
+**PDF Generation from LaTeX:**
+- Add a new endpoint `POST /compile` that accepts LaTeX source code and returns a compiled PDF.
+- Use shell command to run system `pdflatex` to compile `.tex` files to PDF.
+- Implementation approach:
+  1. Write the LaTeX string to a temporary `.tex` file
+  2. Run `pdflatex` command on that file to generate a PDF (may need to run twice for references)
+  3. Return the PDF as a file download or serve it with Active Storage
+  4. Clean up temporary files after compilation
+- Alternative: Modify the `/convert` endpoint to automatically compile the LaTeX and return both LaTeX source and PDF URL.
+- Error handling: Capture `pdflatex` stderr output and return compilation errors to the frontend.
+
+**System Requirements:**
+- Requires `pdflatex` installed on the server (part of TeX Live or MiKTeX distribution)
+- Install packages: `texlive-full` or `texlive-latex-extra` for tcolorbox and other packages
+
+**Frontend Changes:**
+- Update `LaTeXViewer.jsx` to either:
+  - Option A: Display the PDF from backend endpoint directly in an `<iframe>`
+  - Option B: Call a separate `/compile` endpoint when user switches to Rendered tab
+- Display the compiled PDF in an `<embed>` or `<iframe>` on the Rendered tab.
+- Fall back to raw code display with error message if compilation fails.
+- Cache compiled PDF URLs to avoid re-compiling on tab switches.
+
+### 5. Integration
+Connect the frontend upload form to the backend `POST /convert` endpoint. The endpoint returns LaTeX source and either a PDF URL or triggers on-demand compilation via the `/compile` endpoint.
