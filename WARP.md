@@ -3,6 +3,29 @@
 ## Problem Statement
 The goal is to build a web application that converts handwritten math notes into clean LaTeX. The application requires a Ruby on Rails backend to handle image processing and a React frontend for the user interface.
 
+## Setup Instructions (MacOS)
+
+### System Requirements
+This project requires a LaTeX distribution for PDF compilation.
+
+**Install BasicTeX:**
+```bash
+brew install --cask basictex
+```
+
+**Update LaTeX package manager and install required packages:**
+```bash
+sudo tlmgr update --self
+sudo tlmgr install tcolorbox pgf etoolbox environ trimspaces amsmath xcolor geometry
+```
+
+**Verify installation:**
+```bash
+which pdflatex  # Should return /Library/TeX/texbin/pdflatex or similar
+```
+
+**Note:** After installing BasicTeX, you may need to restart your terminal or add `/Library/TeX/texbin` to your PATH.
+
 ## Current State
 The project directory `/Users/quynhan/Desktop/notation` currently only contains a README.md.
 
