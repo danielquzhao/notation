@@ -37,7 +37,9 @@ class ContentFormattingService
     # Parse response
     if response.code == "200"
       result = JSON.parse(response.body)
-      result.dig("candidates", 0, "content", "parts", 0, "text") || ""
+      latex_content = result.dig("candidates", 0, "content", "parts", 0, "text") || ""
+      # Strip markdown code block wrapper if present
+      latex_content.gsub(/^```latex\n?/, '').gsub(/\n?```$/, '')
     else
       raise "API Error: #{response.code} - #{response.body}"
     end
