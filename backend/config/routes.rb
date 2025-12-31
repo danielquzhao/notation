@@ -7,6 +7,9 @@ Rails.application.routes.draw do
 
   # Conversion endpoint
   post "convert", to: "conversions#create"
+  
+  # LaTeX compilation endpoint
+  post "compile", to: "compile#create"
 
   # Defines the root path route ("/")
   # root "posts#index"
