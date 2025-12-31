@@ -1,0 +1,101 @@
+.viewer-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f8f9fa;
+}
+
+.viewer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: #fff;
+  border-bottom: 1px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.viewer-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #212529;
+}
+
+.back-button,
+.upload-new-button {
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.back-button {
+  background: transparent;
+  border: 1px solid #dee2e6;
+  color: #495057;
+}
+
+.back-button:hover {
+  background: #f8f9fa;
+  border-color: #adb5bd;
+}
+
+.upload-new-button {
+  background: #646cff;
+  border: 1px solid #646cff;
+  color: white;
+}
+
+.upload-new-button:hover {
+  background: #535bf2;
+  border-color: #535bf2;
+}
+
+.viewer-content {
+  display: flex;
+  flex: 1;
+  gap: 1rem;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.viewer-panel {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.left-panel,
+.right-panel {
+  width: 50%;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .viewer-content {
+    flex-direction: column;
+  }
+
+  .left-panel,
+  .right-panel {
+    width: 100%;
+    height: 50vh;
+  }
+
+  .viewer-header {
+    padding: 0.8rem 1rem;
+  }
+
+  .viewer-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .back-button,
+  .upload-new-button {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+  }
+}
