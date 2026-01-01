@@ -70,6 +70,7 @@ class ContentFormattingService
       5. Ensure all math notation is properly formatted
       6. Add any missing LaTeX commands needed for proper rendering
       7. Use professional typography and spacing
+      8. Use as simple and little libraries as possible
 
       Example tcolorbox usage you should follow:
       \\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=Definition]
