@@ -1,12 +1,15 @@
 import { useNavigate } from 'react-router-dom'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import axios, { AxiosError } from 'axios'
+import Vara from 'vara'
 import { UploadData, ConvertResponse } from '../types'
 import './HomePage.css'
 
 export default function HomePage() {
   const navigate = useNavigate()
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const varaContainerRef = useRef<HTMLDivElement>(null)
+  const varaInstanceRef = useRef<any>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -74,6 +77,36 @@ export default function HomePage() {
     e.preventDefault()
   }
 
+  useEffect(() => {
+    if (varaContainerRef.current && !varaInstanceRef.current) {
+      // Clear any existing content
+      varaContainerRef.current.innerHTML = ''
+      
+      varaInstanceRef.current = new Vara(
+        '#vara-container',
+        'https://cdn.jsdelivr.net/npm/vara@1.4.0/fonts/Satisfy/SatisfySL.json',
+        [
+          {
+            text: 'upload note',
+            fontSize: 28,
+            strokeWidth: 1.5,
+            color: '#000000',
+            duration: 2000,
+            textAlign: 'center'
+          }
+        ]
+      )
+    }
+
+    return () => {
+      // Cleanup on unmount
+      if (varaContainerRef.current) {
+        varaContainerRef.current.innerHTML = ''
+      }
+      varaInstanceRef.current = null
+    }
+  }, [])
+
   return (
     <div 
       className="home-page"
@@ -94,13 +127,15 @@ export default function HomePage() {
           style={{ display: 'none' }}
         />
         
-        <button 
-          className="upload-link" 
+        <div 
+          ref={varaContainerRef}
+          id="vara-container" 
+          className="upload-link-container"
           onClick={handleUploadClick}
-          disabled={isLoading}
+          style={{ cursor: isLoading ? 'wait' : 'pointer', opacity: isLoading ? 0.4 : 1 }}
         >
-          {isLoading ? 'processing...' : 'upload note'}
-        </button>
+          {isLoading && <div className="loading-text">processing...</div>}
+        </div>
 
         {error && <div className="error-message">{error}</div>}
       </div>

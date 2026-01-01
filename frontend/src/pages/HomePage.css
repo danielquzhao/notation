@@ -39,26 +39,29 @@
   margin-right: auto;
 }
 
-.upload-link {
-  background: none;
-  border: none;
+.upload-link-container {
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.upload-link-container:hover {
+  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 15px rgba(0, 0, 0, 0.1));
+}
+
+.upload-link-container svg {
+  max-width: 200px;
+  height: auto;
+}
+
+.loading-text {
   font-family: 'Computer Modern', 'CMU Serif', 'Latin Modern Roman', Georgia, serif;
   font-size: 1.1rem;
   color: #000000;
-  text-decoration: underline;
-  text-underline-offset: 6px;
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  transition: opacity 0.2s ease;
-}
-
-.upload-link:hover:not(:disabled) {
-  opacity: 0.6;
-}
-
-.upload-link:disabled {
-  opacity: 0.4;
-  cursor: wait;
+  font-style: italic;
 }
 
 .error-message {
