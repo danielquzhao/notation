@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState, useRef, useEffect } from 'react'
 import axios, { AxiosError } from 'axios'
 import Vara from 'vara'
+import { Home, HelpCircle, Github } from 'lucide-react'
 import { UploadData, ConvertResponse } from '../types'
 import FloatingNote from '../components/FloatingNote'
 import './HomePage.css'
@@ -13,6 +14,7 @@ export default function HomePage() {
   const varaInstanceRef = useRef<any>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null)
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
   const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'application/pdf']
@@ -167,9 +169,35 @@ export default function HomePage() {
         {error && <div className="error-message">{error}</div>}
       </div>
 
-      <footer className="footer">
-        TYPESET IN COMPUTER MODERN
-      </footer>
+      <nav 
+        className="nav-bar"
+        onMouseLeave={() => setHoveredItem(null)}
+      >
+        <button 
+          className={`nav-item ${!hoveredItem || hoveredItem === 'home' ? 'expanded' : ''}`}
+          onMouseEnter={() => setHoveredItem('home')}
+        >
+          <Home size={20} />
+          <span className="nav-text">Home</span>
+        </button>
+        <button 
+          className={`nav-item ${hoveredItem === 'faq' ? 'expanded' : ''}`}
+          onMouseEnter={() => setHoveredItem('faq')}
+        >
+          <HelpCircle size={20} />
+          <span className="nav-text">FAQ</span>
+        </button>
+        <a 
+          href="https://github.com/danielquzhao/notation" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className={`nav-item ${hoveredItem === 'github' ? 'expanded' : ''}`}
+          onMouseEnter={() => setHoveredItem('github')}
+        >
+          <Github size={20} />
+          <span className="nav-text">GitHub</span>
+        </a>
+      </nav>
     </div>
   )
 }

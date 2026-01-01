@@ -76,14 +76,57 @@
   margin-right: auto;
 }
 
-.footer {
+.nav-bar {
   position: absolute;
   bottom: 2rem;
+  display: flex;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 0.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem;
+  background: none;
+  border: none;
+  border-radius: 12px;
   font-family: 'Computer Modern', 'CMU Serif', 'Latin Modern Roman', Georgia, serif;
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   color: #666666;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.nav-item .nav-text {
+  font-weight: 500;
+  white-space: nowrap;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-width 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+}
+
+.nav-item.expanded {
+  background: rgba(0, 0, 0, 0.05);
+  color: #333333;
+  padding: 0.6rem 1rem;
+}
+
+.nav-item.expanded .nav-text {
+  max-width: 100px;
+  opacity: 1;
+  margin-left: 0.25rem;
 }
 
 /* Floating Notes Positioning */
