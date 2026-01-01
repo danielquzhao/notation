@@ -1,17 +1,22 @@
 import { useState } from 'react'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
+import { UploadData, ConvertResponse } from '../types'
 import './UploadForm.css'
 
-export default function UploadForm({ onUploadSuccess }) {
-  const [isDragging, setIsDragging] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState(null)
-  const [selectedFile, setSelectedFile] = useState(null)
+interface UploadFormProps {
+  onUploadSuccess: (data: UploadData) => void
+}
+
+export default function UploadForm({ onUploadSuccess }: UploadFormProps) {
+  const [isDragging, setIsDragging] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [error, setError] = useState<string | null>(null)
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
   const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'application/pdf']
 
-  const handleDragOver = (e) => {
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     setIsDragging(true)
   }
@@ -20,7 +25,7 @@ export default function UploadForm({ onUploadSuccess }) {
     setIsDragging(false)
   }
 
-  const handleDrop = (e) => {
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     setIsDragging(false)
     const files = e.dataTransfer.files
@@ -29,14 +34,14 @@ export default function UploadForm({ onUploadSuccess }) {
     }
   }
 
-  const handleFileInput = (e) => {
+  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
-    if (files.length > 0) {
+    if (files && files.length > 0) {
       handleFile(files[0])
     }
   }
 
-  const handleFile = (file) => {
+  const handleFile = (file: File) => {
     setError(null)
 
     if (!ALLOWED_TYPES.includes(file.type)) {
@@ -60,7 +65,7 @@ export default function UploadForm({ onUploadSuccess }) {
     formData.append('file', selectedFile)
 
     try {
-      const response = await axios.post(`${BACKEND_URL}/convert`, formData, {
+      const response = await axios.post<ConvertResponse>(`${BACKEND_URL}/convert`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -76,7 +81,8 @@ export default function UploadForm({ onUploadSuccess }) {
         latex: response.data.latex
       })
     } catch (err) {
-      setError(err.response?.data?.error || 'Failed to convert file. Please try again.')
+      const error = err as AxiosError<{ error: string }>
+      setError(error.response?.data?.error || 'Failed to convert file. Please try again.')
     } finally {
       setIsLoading(false)
     }

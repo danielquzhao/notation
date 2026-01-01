@@ -2,12 +2,13 @@ import { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import MediaViewer from '../components/MediaViewer'
 import LaTeXViewer from '../components/LaTeXViewer'
+import { UploadData } from '../types'
 import './ViewerPage.css'
 
 export default function ViewerPage() {
   const location = useLocation()
   const navigate = useNavigate()
-  const data = location.state
+  const data = location.state as UploadData | null
 
   useEffect(() => {
     // Redirect to home if no data is available

@@ -1,12 +1,19 @@
 import { useState, useEffect } from 'react'
+import { CompileErrorResponse } from '../types'
 import './LaTeXViewer.css'
 
-export default function LaTeXViewer({ latex }) {
-  const [activeTab, setActiveTab] = useState('rendered')
-  const [copySuccess, setCopySuccess] = useState(false)
-  const [pdfUrl, setPdfUrl] = useState(null)
-  const [isCompiling, setIsCompiling] = useState(false)
-  const [compileError, setCompileError] = useState(null)
+interface LaTeXViewerProps {
+  latex: string
+}
+
+type TabType = 'rendered' | 'raw'
+
+export default function LaTeXViewer({ latex }: LaTeXViewerProps) {
+  const [activeTab, setActiveTab] = useState<TabType>('rendered')
+  const [copySuccess, setCopySuccess] = useState<boolean>(false)
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null)
+  const [isCompiling, setIsCompiling] = useState<boolean>(false)
+  const [compileError, setCompileError] = useState<string | null>(null)
 
   useEffect(() => {
     compileLaTeX()
@@ -34,7 +41,7 @@ export default function LaTeXViewer({ latex }) {
       })
 
       if (!response.ok) {
-        const errorData = await response.json()
+        const errorData = await response.json() as CompileErrorResponse
         throw new Error(errorData.error || 'Failed to compile LaTeX')
       }
 
@@ -43,7 +50,8 @@ export default function LaTeXViewer({ latex }) {
       setPdfUrl(url)
     } catch (err) {
       console.error('LaTeX compilation error:', err)
-      setCompileError(err.message || 'Failed to compile LaTeX. Check the raw code for syntax errors.')
+      const error = err as Error
+      setCompileError(error.message || 'Failed to compile LaTeX. Check the raw code for syntax errors.')
     } finally {
       setIsCompiling(false)
     }
@@ -86,10 +94,10 @@ export default function LaTeXViewer({ latex }) {
             {pdfUrl && (
               <iframe
                 src={pdfUrl}
-                type="application/pdf"
                 width="100%"
                 height="100%"
                 style={{ border: 'none', borderRadius: '4px' }}
+                title="LaTeX PDF Preview"
               />
             )}
           </div>

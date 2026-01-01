@@ -1,11 +1,12 @@
 import { useNavigate } from 'react-router-dom'
 import UploadForm from '../components/UploadForm'
+import { UploadData } from '../types'
 import './HomePage.css'
 
 export default function HomePage() {
   const navigate = useNavigate()
 
-  const handleUploadSuccess = (data) => {
+  const handleUploadSuccess = (data: UploadData) => {
     navigate('/viewer', { state: data })
   }
 

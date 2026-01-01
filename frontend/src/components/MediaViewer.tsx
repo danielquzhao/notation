@@ -1,6 +1,12 @@
 import './MediaViewer.css'
 
-export default function MediaViewer({ fileUrl, fileName, file }) {
+interface MediaViewerProps {
+  fileUrl: string
+  fileName: string
+  file: File
+}
+
+export default function MediaViewer({ fileUrl, fileName, file }: MediaViewerProps) {
   const isPDF = file?.type === 'application/pdf' || fileName?.toLowerCase().endsWith('.pdf')
 
   return (
