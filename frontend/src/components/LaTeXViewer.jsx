@@ -25,16 +25,17 @@ export default function LaTeXViewer({ latex }) {
         cleanLatex = cleanLatex.replace(/^```\n?/, '').replace(/\n?```$/, '')
       }
       
-      const response = await fetch('https://latex.codecogs.com/pdf.latex', {
+      const response = await fetch('http://localhost:3000/compile', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
         },
-        body: `latex=${encodeURIComponent(cleanLatex)}`,
+        body: JSON.stringify({ latex: cleanLatex }),
       })
 
       if (!response.ok) {
-        throw new Error('Failed to compile LaTeX')
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Failed to compile LaTeX')
       }
 
       const blob = await response.blob()
@@ -42,7 +43,7 @@ export default function LaTeXViewer({ latex }) {
       setPdfUrl(url)
     } catch (err) {
       console.error('LaTeX compilation error:', err)
-      setCompileError('Failed to compile LaTeX. Check the raw code for syntax errors.')
+      setCompileError(err.message || 'Failed to compile LaTeX. Check the raw code for syntax errors.')
     } finally {
       setIsCompiling(false)
     }
