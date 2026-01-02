@@ -2,9 +2,10 @@ import { useNavigate } from 'react-router-dom'
 import { useState, useRef, useEffect } from 'react'
 import axios, { AxiosError } from 'axios'
 import Vara from 'vara'
-import { Home, HelpCircle, Github } from 'lucide-react'
+import { Home, Info, Github } from 'lucide-react'
 import { UploadData, ConvertResponse } from '../types'
 import FloatingNote from '../components/FloatingNote'
+import AboutModal from '../components/AboutModal'
 import './HomePage.css'
 
 export default function HomePage() {
@@ -15,6 +16,7 @@ export default function HomePage() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
+  const [isAboutModalOpen, setIsAboutModalOpen] = useState<boolean>(false)
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
   const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'application/pdf']
@@ -197,11 +199,12 @@ export default function HomePage() {
           <span className="nav-text">Home</span>
         </button>
         <button 
-          className={`nav-item ${hoveredItem === 'faq' ? 'expanded' : ''}`}
-          onMouseEnter={() => setHoveredItem('faq')}
+          className={`nav-item ${hoveredItem === 'about' ? 'expanded' : ''}`}
+          onMouseEnter={() => setHoveredItem('about')}
+          onClick={() => setIsAboutModalOpen(true)}
         >
-          <HelpCircle size={20} />
-          <span className="nav-text">FAQ</span>
+          <Info size={20} />
+          <span className="nav-text">About</span>
         </button>
         <a 
           href="https://github.com/danielquzhao/notation" 
@@ -214,6 +217,8 @@ export default function HomePage() {
           <span className="nav-text">GitHub</span>
         </a>
       </nav>
+
+      <AboutModal isOpen={isAboutModalOpen} onClose={() => setIsAboutModalOpen(false)} />
     </div>
   )
 }

@@ -1,8 +1,9 @@
 import { useEffect, useState, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Home, HelpCircle, Github, Download, Copy, FileText, File, ExternalLink } from 'lucide-react'
+import { Home, Info, Github, Download, Copy, FileText, File, ExternalLink } from 'lucide-react'
 import MediaViewer from '../components/MediaViewer'
 import LaTeXViewer from '../components/LaTeXViewer'
+import AboutModal from '../components/AboutModal'
 import { UploadData } from '../types'
 import './ViewerPage.css'
 
@@ -12,6 +13,7 @@ export default function ViewerPage() {
   const data = location.state as UploadData | null
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
   const [copySuccess, setCopySuccess] = useState<boolean>(false)
+  const [isAboutModalOpen, setIsAboutModalOpen] = useState<boolean>(false)
 
   const pdfUrlRef = useRef<string | null>(null)
 
@@ -99,11 +101,12 @@ export default function ViewerPage() {
           <span className="nav-text">Home</span>
         </button>
         <button 
-          className={`nav-item ${hoveredItem === 'faq' ? 'expanded' : ''}`}
-          onMouseEnter={() => setHoveredItem('faq')}
+          className={`nav-item ${hoveredItem === 'about' ? 'expanded' : ''}`}
+          onMouseEnter={() => setHoveredItem('about')}
+          onClick={() => setIsAboutModalOpen(true)}
         >
-          <HelpCircle size={20} />
-          <span className="nav-text">FAQ</span>
+          <Info size={20} />
+          <span className="nav-text">About</span>
         </button>
         <a 
           href="https://github.com/danielquzhao/notation" 
@@ -167,6 +170,8 @@ export default function ViewerPage() {
           <LaTeXViewer latex={data.latex} onPdfUrlChange={handlePdfUrlChange} />
         </div>
       </div>
+
+      <AboutModal isOpen={isAboutModalOpen} onClose={() => setIsAboutModalOpen(false)} />
     </div>
   )
 }
