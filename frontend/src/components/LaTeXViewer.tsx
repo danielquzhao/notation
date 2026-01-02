@@ -1,23 +1,41 @@
-import { useState, useEffect } from 'react'
-import { CompileErrorResponse } from '../types'
+import { useState, useEffect, useRef } from 'react'
+import { Document, Page, pdfjs } from 'react-pdf'
 import './LaTeXViewer.css'
+import { CompileErrorResponse } from '../types'
+
+// Set up PDF.js worker
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`
 
 interface LaTeXViewerProps {
   latex: string
+  onPdfUrlChange?: (url: string | null) => void
 }
 
 type TabType = 'rendered' | 'raw'
 
-export default function LaTeXViewer({ latex }: LaTeXViewerProps) {
+export default function LaTeXViewer({ latex, onPdfUrlChange }: LaTeXViewerProps) {
   const [activeTab, setActiveTab] = useState<TabType>('rendered')
-  const [copySuccess, setCopySuccess] = useState<boolean>(false)
   const [pdfUrl, setPdfUrl] = useState<string | null>(null)
   const [isCompiling, setIsCompiling] = useState<boolean>(false)
   const [compileError, setCompileError] = useState<string | null>(null)
+  const [numPages, setNumPages] = useState<number | null>(null)
+  const [containerWidth, setContainerWidth] = useState<number>(0)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     compileLaTeX()
   }, [latex])
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth)
+      }
+    }
+    updateWidth()
+    window.addEventListener('resize', updateWidth)
+    return () => window.removeEventListener('resize', updateWidth)
+  }, [])
 
   const compileLaTeX = async () => {
     setIsCompiling(true)
@@ -48,22 +66,13 @@ export default function LaTeXViewer({ latex }: LaTeXViewerProps) {
       const blob = await response.blob()
       const url = URL.createObjectURL(blob)
       setPdfUrl(url)
+      onPdfUrlChange?.(url)
     } catch (err) {
       console.error('LaTeX compilation error:', err)
       const error = err as Error
       setCompileError(error.message || 'Failed to compile LaTeX. Check the raw code for syntax errors.')
     } finally {
       setIsCompiling(false)
-    }
-  }
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(latex)
-      setCopySuccess(true)
-      setTimeout(() => setCopySuccess(false), 2000)
-    } catch (err) {
-      console.error('Failed to copy:', err)
     }
   }
 
@@ -88,24 +97,30 @@ export default function LaTeXViewer({ latex }: LaTeXViewerProps) {
 
       <div className="latex-content">
         {activeTab === 'rendered' ? (
-          <div className="rendered-view">
+          <div className="rendered-view" ref={containerRef}>
             {isCompiling && <p className="loading">Compiling LaTeX...</p>}
             {compileError && <p className="error">{compileError}</p>}
             {pdfUrl && (
-              <iframe
-                src={pdfUrl}
-                width="100%"
-                height="100%"
-                style={{ border: 'none', borderRadius: '4px' }}
-                title="LaTeX PDF Preview"
-              />
+              <Document
+                file={pdfUrl}
+                onLoadSuccess={({ numPages }) => setNumPages(numPages)}
+                loading={<p className="loading">Loading PDF...</p>}
+                error={<p className="error">Failed to load PDF</p>}
+              >
+                {Array.from(new Array(numPages), (_, index) => (
+                  <Page
+                    key={`page_${index + 1}`}
+                    pageNumber={index + 1}
+                    width={Math.min(containerWidth * 0.9, 800)}
+                    renderTextLayer={false}
+                    renderAnnotationLayer={false}
+                  />
+                ))}
+              </Document>
             )}
           </div>
         ) : (
           <div className="raw-view">
-            <button className="copy-button" onClick={handleCopy}>
-              {copySuccess ? '✓ Copied!' : 'Copy'}
-            </button>
             <pre className="latex-code">
               <code>{latex}</code>
             </pre>

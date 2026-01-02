@@ -2,55 +2,71 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: #fff;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
   overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .latex-header {
+  height: 70px;
   padding: 1rem;
-  border-bottom: 1px solid #e9ecef;
+  background: rgba(255, 255, 255, 0.5);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .tabs {
   display: flex;
-  gap: 0.5rem;
+  gap: 0;
 }
 
 .tab {
   padding: 0.5rem 1rem;
   background: transparent;
-  border: 1px solid #dee2e6;
-  border-radius: 4px;
+  border: none;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.2s;
+  font-size: 0.95rem;
+  font-family: 'Computer Modern', 'CMU Serif', 'Latin Modern Roman', Georgia, serif;
+  transition: all 0.3s ease;
+  color: #8b8b8b;
+  font-weight: 500;
+  outline: none;
 }
 
 .tab:hover {
-  background: #f8f9fa;
+  color: #333333;
+}
+
+.tab:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 .tab.active {
-  background: #646cff;
-  color: white;
-  border-color: #646cff;
+  color: #333333;
 }
 
 .latex-content {
   flex: 1;
-  overflow: auto;
-  padding: 1.5rem;
+  overflow: hidden;
+  padding: 0;
 }
 
 .rendered-view {
-  background: #f8f9fa;
-  border-radius: 4px;
-  min-height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  padding: 2rem 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 0;
 }
 
 .rendered-view .loading,
@@ -66,14 +82,38 @@
   border-radius: 4px;
 }
 
-.rendered-view iframe {
-  width: 100%;
-  height: 100%;
+.rendered-view .react-pdf__Document {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.rendered-view .react-pdf__Page {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1);
+  background: white;
+  border-radius: 4px;
+  transition: transform 0.3s ease;
+}
+
+.rendered-view .react-pdf__Page:hover {
+  transform: scale(1.01);
+}
+
+.rendered-view .react-pdf__Page canvas {
+  display: block;
+}
+
+/* Hide page numbers */
+.react-pdf__Page__pageNumber {
+  display: none !important;
 }
 
 .raw-view {
   position: relative;
   height: 100%;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .copy-button {
@@ -81,24 +121,28 @@
   top: 0.5rem;
   right: 0.5rem;
   padding: 0.5rem 1rem;
-  background: #646cff;
+  background: #333333;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 12px;
   cursor: pointer;
   font-size: 0.85rem;
+  font-family: 'Computer Modern', 'CMU Serif', 'Latin Modern Roman', Georgia, serif;
   z-index: 10;
-  transition: background 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .copy-button:hover {
-  background: #535bf2;
+  background: #000000;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .latex-code {
   margin: 0;
-  padding: 3rem 1rem 1rem 1rem;
-  background: #f8f9fa;
+  padding: 1rem;
+  background: rgba(248, 249, 250, 0.5);
   border-radius: 4px;
   overflow-x: auto;
   font-family: 'Courier New', monospace;
