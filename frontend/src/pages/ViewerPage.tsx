@@ -53,9 +53,23 @@ export default function ViewerPage() {
 
   const handleOpenInOverleaf = () => {
     if (data?.latex) {
-      // Overleaf allows opening with LaTeX content via URL parameter
-      const encodedLatex = encodeURIComponent(data.latex)
-      window.open(`https://www.overleaf.com/docs?snip=${encodedLatex}`, '_blank')
+      // Use base64 data URL to avoid 414 request URI too large error
+      const base64Latex = btoa(unescape(encodeURIComponent(data.latex)))
+      const dataUrl = `data:application/x-tex;base64,${base64Latex}`
+      const form = document.createElement('form')
+      form.method = 'post'
+      form.action = 'https://www.overleaf.com/docs'
+      form.target = '_blank'
+      
+      const input = document.createElement('input')
+      input.type = 'hidden'
+      input.name = 'snip_uri'
+      input.value = dataUrl
+      
+      form.appendChild(input)
+      document.body.appendChild(form)
+      form.submit()
+      document.body.removeChild(form)
     }
   }
 
