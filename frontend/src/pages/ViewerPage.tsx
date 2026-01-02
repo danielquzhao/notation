@@ -38,7 +38,6 @@ export default function ViewerPage() {
         <button className="back-button" onClick={handleBack}>
           ← Back
         </button>
-        <h2>Notation Viewer</h2>
       </header>
 
       <div className="viewer-content">
