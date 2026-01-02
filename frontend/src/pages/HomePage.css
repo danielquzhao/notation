@@ -78,7 +78,7 @@
 
 .nav-bar {
   position: absolute;
-  bottom: 2rem;
+  bottom: 2.8rem;
   display: flex;
   gap: 0.5rem;
   background: rgba(255, 255, 255, 0.9);
