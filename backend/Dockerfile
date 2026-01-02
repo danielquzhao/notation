@@ -23,8 +23,13 @@ RUN bundle install
 # Copy the entire app
 COPY . .
 
-# Expose port
-EXPOSE 3000
+# Set production environment
+ENV RAILS_ENV=production
+ENV RAILS_LOG_TO_STDOUT=true
+ENV RAILS_SERVE_STATIC_FILES=true
 
-# Start the Rails server
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+# Expose port
+EXPOSE 8080
+
+# Start Puma directly
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
