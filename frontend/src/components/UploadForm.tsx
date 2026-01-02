@@ -13,7 +13,7 @@ export default function UploadForm({ onUploadSuccess }: UploadFormProps) {
   const [error, setError] = useState<string | null>(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
 
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
+  const API_BASE_URL = '/api'
   const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'application/pdf']
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -65,7 +65,7 @@ export default function UploadForm({ onUploadSuccess }: UploadFormProps) {
     formData.append('file', selectedFile)
 
     try {
-      const response = await axios.post<ConvertResponse>(`${BACKEND_URL}/convert`, formData, {
+      const response = await axios.post<ConvertResponse>(`${API_BASE_URL}/convert`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
