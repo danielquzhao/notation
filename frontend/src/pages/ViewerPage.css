@@ -2,7 +2,9 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: #f8f9fa;
+  background: #ffffff;
+  background-image: radial-gradient(circle, #d8d8d8 1px, transparent 1px);
+  background-size: 25px 25px;
 }
 
 .viewer-header {
@@ -10,9 +12,10 @@
   align-items: center;
   justify-content: center;
   padding: 2rem 2rem;
-  background: #fff;
-  border-bottom: 1px solid #e9ecef;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   position: relative;
 }
 
@@ -34,16 +37,19 @@
 }
 
 .back-button {
-  background: transparent;
-  border: 1px solid #dee2e6;
-  color: #495057;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #333333;
   position: absolute;
   left: 2rem;
+  font-family: 'Computer Modern', 'CMU Serif', 'Latin Modern Roman', Georgia, serif;
+  transition: all 0.3s ease;
 }
 
 .back-button:hover {
-  background: #f8f9fa;
-  border-color: #adb5bd;
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.15);
+  transform: translateX(-2px);
 }
 
 .upload-new-button {
