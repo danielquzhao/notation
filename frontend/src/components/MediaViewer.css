@@ -38,12 +38,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding-top: 8rem;
+  justify-content: center;
 }
 
 .uploaded-image {
-  width: 75%;
+  width: 90%;
   max-height: 80%;
   object-fit: contain;
   border-radius: 12px;
