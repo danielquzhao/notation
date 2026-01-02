@@ -20,7 +20,7 @@
   max-height: 80vh;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   animation: modalFadeIn 0.2s ease-out;
 }
 @keyframes modalFadeIn {
@@ -76,7 +76,7 @@
 }
 
 .modal-section {
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
 .modal-section:last-child {

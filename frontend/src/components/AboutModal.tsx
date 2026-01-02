@@ -21,12 +21,11 @@ export default function AboutModal({ isOpen, onClose }: AboutModalProps) {
         <div className="modal-section">
           <p>
             Convert handwritten math notes into clean LaTeX documents. Upload an image or PDF, 
-            and transforms it into professional mathematical markup.
+            and AI transforms it into professional mathematical markup.
           </p>
         </div>
 
         <div className="modal-section">
-          <h3>How It Works</h3>
           <div className="steps-container">
             <div className="step">
               <div className="step-icon">
@@ -65,12 +64,10 @@ export default function AboutModal({ isOpen, onClose }: AboutModalProps) {
         <div className="modal-section">
           <h3>Features</h3>
           <ul>
-            <li>Image and PDF support</li>
             <li>AI-powered handwriting recognition</li>
             <li>Professional LaTeX formatting</li>
-            <li>Side-by-side comparison view</li>
-            <li>Multiple export options</li>
-            <li>Overleaf integration</li>
+            <li>Side-by-side comparison and preview</li>
+            <li>Export to PDF, TeX, or Overleaf</li>
           </ul>
         </div>
       </div>
