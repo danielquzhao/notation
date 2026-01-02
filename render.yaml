@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: notation
+    runtime: ruby
+    buildCommand: "./backend/bin/render-build.sh"
+    startCommand: "cd backend && bundle exec rails server -b 0.0.0.0 -p $PORT"
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_MASTER_KEY
+        sync: false  # Set manually in Render dashboard from backend/config/master.key
+      - key: GEMINI_API_KEY
+        sync: false  # Set manually in Render dashboard
+      - key: RAILS_LOG_TO_STDOUT
+        value: enabled
+      - key: RAILS_SERVE_STATIC_FILES
+        value: enabled
+    healthCheckPath: /up

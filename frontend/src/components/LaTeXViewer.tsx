@@ -50,7 +50,7 @@ export default function LaTeXViewer({ latex, onPdfUrlChange }: LaTeXViewerProps)
         cleanLatex = cleanLatex.replace(/^```\n?/, '').replace(/\n?```$/, '')
       }
       
-      const response = await fetch('http://localhost:3000/compile', {
+      const response = await fetch('/api/compile', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
