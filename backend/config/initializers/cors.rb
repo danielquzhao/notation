@@ -8,7 +8,7 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     # Allow requests from localhost (development) and from the frontend Cloud Run domain (production)
-    origins "localhost:5173", /notation-frontend.*\.run\.app$/
+    origins "localhost:5173", /https?:\/\/notation-frontend.*\.run\.app\/?$/
 
     resource "*",
       headers: :any,

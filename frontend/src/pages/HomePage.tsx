@@ -95,7 +95,7 @@ export default function HomePage() {
     if (varaContainerRef.current && !varaInstanceRef.current) {
       // Clear any existing content
       varaContainerRef.current.innerHTML = ''
-      
+
       varaInstanceRef.current = new Vara(
         '#vara-container',
         'https://cdn.jsdelivr.net/npm/vara@1.4.0/fonts/Satisfy/SatisfySL.json',
@@ -122,7 +122,7 @@ export default function HomePage() {
   }, [])
 
   return (
-    <div 
+    <div
       className="home-page"
       onDrop={handleDrop}
       onDragOver={handleDragOver}
@@ -159,11 +159,11 @@ export default function HomePage() {
 
       <div className="content-wrapper">
         <h1 className="title">Notation</h1>
-        
+
         <p className="subtitle">
           An interface for the synthesis of handwritten mathematics into formal markup. Drop a file or click below to begin.
         </p>
-        
+
         <input
           ref={fileInputRef}
           type="file"
@@ -171,16 +171,16 @@ export default function HomePage() {
           accept=".png,.jpg,.jpeg,.pdf"
           style={{ display: 'none' }}
         />
-        
+
         <div className="upload-area">
-          <div 
+          <div
             ref={varaContainerRef}
-            id="vara-container" 
+            id="vara-container"
             className="upload-link-container"
             onClick={handleUploadClick}
             style={{ cursor: isLoading ? 'wait' : 'pointer', display: isLoading ? 'none' : 'flex' }}
           />
-          
+
           {isLoading && (
             <div className="loading-text">
               processing
@@ -196,18 +196,18 @@ export default function HomePage() {
         {error && <div className="error-message">{error}</div>}
       </div>
 
-      <nav 
+      <nav
         className="nav-bar"
         onMouseLeave={() => setHoveredItem(null)}
       >
-        <button 
+        <button
           className={`nav-item ${!hoveredItem || hoveredItem === 'home' ? 'expanded' : ''}`}
           onMouseEnter={() => setHoveredItem('home')}
         >
           <Home size={20} />
           <span className="nav-text">Home</span>
         </button>
-        <button 
+        <button
           className={`nav-item ${hoveredItem === 'about' ? 'expanded' : ''}`}
           onMouseEnter={() => setHoveredItem('about')}
           onClick={() => setIsAboutModalOpen(true)}
@@ -215,9 +215,9 @@ export default function HomePage() {
           <Info size={20} />
           <span className="nav-text">About</span>
         </button>
-        <a 
-          href="https://github.com/danielquzhao/notation" 
-          target="_blank" 
+        <a
+          href="https://github.com/danielquzhao/notation"
+          target="_blank"
           rel="noopener noreferrer"
           className={`nav-item ${hoveredItem === 'github' ? 'expanded' : ''}`}
           onMouseEnter={() => setHoveredItem('github')}
