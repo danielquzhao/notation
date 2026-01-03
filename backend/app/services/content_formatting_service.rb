@@ -76,7 +76,7 @@ class ContentFormattingService
       Content here
       \\end{tcolorbox}
 
-      Ensure all tcolorbox and tables are set to width=\textwidth to prevent horizontal overflow. Enable the breakable library for all boxes and use longtable for tables to ensure content flows vertically across pages without being cut off.
+      Ensure all content—especially boxes, tables, and code blocks—is contained within the page margins. If a box or block of text is too long for the current page, split the content logically so that no text is cut off or rendered outside the visible area.
 
       DO NOT USE: pdfcol.sty, pgfkeys. Do not overcomplicate the number of import libraries.
       Return ONLY the complete LaTeX document code, starting with \\documentclass and ending with \\end{document}.
