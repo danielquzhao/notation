@@ -7,7 +7,9 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "localhost:5173"
+    # Allow requests from localhost (development) and from the frontend Cloud Run domain (production)
+    # Using "*" temporarily to ensure the 500 error body is visible for debugging
+    origins "*"
 
     resource "*",
       headers: :any,

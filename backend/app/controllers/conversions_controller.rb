@@ -16,6 +16,8 @@ class ConversionsController < ApplicationController
       
       render json: { latex: formatted_latex }, status: :ok
     rescue StandardError => e
+      Rails.logger.error "Conversion Error: #{e.message}"
+      Rails.logger.error e.backtrace.join("\n")
       render json: { error: e.message }, status: :internal_server_error
     end
   end

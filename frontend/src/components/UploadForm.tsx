@@ -13,7 +13,16 @@ export default function UploadForm({ onUploadSuccess }: UploadFormProps) {
   const [error, setError] = useState<string | null>(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
 
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
+  // Try env var first, fallback to replacing 'frontend' with 'backend' in hostname (Cloud Run)
+  // then fallback to localhost for development
+  const getBackendUrl = () => {
+    if (import.meta.env.VITE_BACKEND_URL) return import.meta.env.VITE_BACKEND_URL
+    if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
+      return `${window.location.protocol}//${window.location.hostname.replace('notation-frontend', 'notation-backend')}`
+    }
+    return 'http://localhost:3000'
+  }
+  const BACKEND_URL = getBackendUrl()
   const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'application/pdf']
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {

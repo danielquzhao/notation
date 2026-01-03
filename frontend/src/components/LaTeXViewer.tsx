@@ -50,7 +50,15 @@ export default function LaTeXViewer({ latex, onPdfUrlChange }: LaTeXViewerProps)
         cleanLatex = cleanLatex.replace(/^```\n?/, '').replace(/\n?```$/, '')
       }
       
-      const response = await fetch('http://localhost:3000/compile', {
+      const getBackendUrl = () => {
+        if (import.meta.env.VITE_BACKEND_URL) return import.meta.env.VITE_BACKEND_URL
+        if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
+          return `${window.location.protocol}//${window.location.hostname.replace('notation-frontend', 'notation-backend')}`
+        }
+        return 'http://localhost:3000'
+      }
+      const BACKEND_URL = getBackendUrl()
+      const response = await fetch(`${BACKEND_URL}/compile`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
