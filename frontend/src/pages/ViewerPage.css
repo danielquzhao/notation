@@ -41,6 +41,11 @@
   text-decoration: none;
   overflow: hidden;
   white-space: nowrap;
+  outline: none;
+}
+
+.viewer-nav-bar .nav-item:focus {
+  outline: none;
 }
 
 .viewer-nav-bar .nav-item .nav-text {
@@ -116,6 +121,11 @@
   gap: 0.5rem;
   transition: all 0.2s ease;
   white-space: nowrap;
+  outline: none;
+}
+
+.download-option:focus {
+  outline: none;
 }
 
 .download-option:hover {

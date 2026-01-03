@@ -70,13 +70,15 @@ class ContentFormattingService
       5. Ensure all math notation is properly formatted
       6. Add any missing LaTeX commands needed for proper rendering
       7. Use professional typography and spacing
-      8. Use as simple and little libraries as possible
 
       Example tcolorbox usage you should follow:
       \\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=Definition]
       Content here
       \\end{tcolorbox}
 
+      Ensure all content—especially boxes, tables, and code blocks—is contained within the page margins. If a box or block of text is too long for the current page, split the content logically so that no text is cut off or rendered outside the visible area.
+
+      DO NOT USE: pdfcol.sty, pgfkeys. Do not overcomplicate the number of import libraries.
       Return ONLY the complete LaTeX document code, starting with \\documentclass and ending with \\end{document}.
       Do not include any explanations or commentary outside the LaTeX code.
     PROMPT

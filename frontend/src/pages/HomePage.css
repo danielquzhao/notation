@@ -149,6 +149,11 @@
   text-decoration: none;
   overflow: hidden;
   white-space: nowrap;
+  outline: none;
+}
+
+.nav-item:focus {
+  outline: none;
 }
 
 .nav-item .nav-text {

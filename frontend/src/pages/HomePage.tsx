@@ -16,6 +16,7 @@ export default function HomePage() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
+  const [pinnedItem, setPinnedItem] = useState<string | null>(null)
   const [isAboutModalOpen, setIsAboutModalOpen] = useState<boolean>(false)
 
   // Try env var first, fallback to replacing 'frontend' with 'backend' in hostname (Cloud Run)
@@ -200,17 +201,20 @@ export default function HomePage() {
         className="nav-bar"
         onMouseLeave={() => setHoveredItem(null)}
       >
-        <button
-          className={`nav-item ${!hoveredItem || hoveredItem === 'home' ? 'expanded' : ''}`}
+        <button 
+          className={`nav-item ${(!hoveredItem || hoveredItem === 'home') && !pinnedItem ? 'expanded' : ''}`}
           onMouseEnter={() => setHoveredItem('home')}
         >
           <Home size={20} />
           <span className="nav-text">Home</span>
         </button>
-        <button
-          className={`nav-item ${hoveredItem === 'about' ? 'expanded' : ''}`}
+        <button 
+          className={`nav-item ${pinnedItem === 'about' || hoveredItem === 'about' ? 'expanded' : ''}`}
           onMouseEnter={() => setHoveredItem('about')}
-          onClick={() => setIsAboutModalOpen(true)}
+          onClick={() => {
+            setPinnedItem('about')
+            setIsAboutModalOpen(true)
+          }}
         >
           <Info size={20} />
           <span className="nav-text">About</span>
@@ -227,7 +231,10 @@ export default function HomePage() {
         </a>
       </nav>
 
-      <AboutModal isOpen={isAboutModalOpen} onClose={() => setIsAboutModalOpen(false)} />
+      <AboutModal isOpen={isAboutModalOpen} onClose={() => {
+        setIsAboutModalOpen(false)
+        setPinnedItem(null)
+      }} />
     </div>
   )
 }

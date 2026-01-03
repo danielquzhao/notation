@@ -12,6 +12,7 @@ export default function ViewerPage() {
   const navigate = useNavigate()
   const data = location.state as UploadData | null
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
+  const [pinnedItem, setPinnedItem] = useState<string | null>(null)
   const [copySuccess, setCopySuccess] = useState<boolean>(false)
   const [isAboutModalOpen, setIsAboutModalOpen] = useState<boolean>(false)
 
@@ -93,7 +94,7 @@ export default function ViewerPage() {
         onMouseLeave={() => setHoveredItem(null)}
       >
         <button 
-          className={`nav-item ${hoveredItem === 'home' ? 'expanded' : ''}`}
+          className={`nav-item ${hoveredItem === 'home' && !pinnedItem ? 'expanded' : ''}`}
           onMouseEnter={() => setHoveredItem('home')}
           onClick={() => navigate('/')}
         >
@@ -101,9 +102,12 @@ export default function ViewerPage() {
           <span className="nav-text">Home</span>
         </button>
         <button 
-          className={`nav-item ${hoveredItem === 'about' ? 'expanded' : ''}`}
+          className={`nav-item ${pinnedItem === 'about' || hoveredItem === 'about' ? 'expanded' : ''}`}
           onMouseEnter={() => setHoveredItem('about')}
-          onClick={() => setIsAboutModalOpen(true)}
+          onClick={() => {
+            setPinnedItem('about')
+            setIsAboutModalOpen(true)
+          }}
         >
           <Info size={20} />
           <span className="nav-text">About</span>
@@ -171,7 +175,10 @@ export default function ViewerPage() {
         </div>
       </div>
 
-      <AboutModal isOpen={isAboutModalOpen} onClose={() => setIsAboutModalOpen(false)} />
+      <AboutModal isOpen={isAboutModalOpen} onClose={() => {
+        setIsAboutModalOpen(false)
+        setPinnedItem(null)
+      }} />
     </div>
   )
 }
