@@ -162,7 +162,7 @@ export default function HomePage() {
         <h1 className="title">Notation</h1>
 
         <p className="subtitle">
-          An interface for the synthesis of handwritten mathematics into formal markup. Drop a file or click below to begin.
+          An interface to convert your handwritten math notes into formatted LaTeX code. Drop a file or click below to begin.
         </p>
 
         <input
@@ -201,14 +201,14 @@ export default function HomePage() {
         className="nav-bar"
         onMouseLeave={() => setHoveredItem(null)}
       >
-        <button 
+        <button
           className={`nav-item ${(!hoveredItem || hoveredItem === 'home') && !pinnedItem ? 'expanded' : ''}`}
           onMouseEnter={() => setHoveredItem('home')}
         >
           <Home size={20} />
           <span className="nav-text">Home</span>
         </button>
-        <button 
+        <button
           className={`nav-item ${pinnedItem === 'about' || hoveredItem === 'about' ? 'expanded' : ''}`}
           onMouseEnter={() => setHoveredItem('about')}
           onClick={() => {

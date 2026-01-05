@@ -40,7 +40,7 @@ export default function AboutModal({ isOpen, onClose }: AboutModalProps) {
                 <Cpu size={28} />
               </div>
               <div className="step-title">Extract</div>
-              <div className="step-desc">AI interprets</div>
+              <div className="step-desc">AI Analysis</div>
             </div>
             <div className="step-arrow">→</div>
             <div className="step">

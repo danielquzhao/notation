@@ -150,7 +150,7 @@ export default function ViewerPage() {
           onClick={handleCopyLatex}
         >
           <Copy size={20} />
-          <span className="nav-text">{copySuccess ? 'Copied!' : 'Copy LaTeX'}</span>
+          <span className="nav-text">{copySuccess ? 'Copied!' : 'Copy'}</span>
         </button>
         <button 
           className={`nav-item ${hoveredItem === 'overleaf' ? 'expanded' : ''}`}
